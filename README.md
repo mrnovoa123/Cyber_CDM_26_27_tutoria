@@ -1,4 +1,3 @@
-# Cyber_CDM_26_27_tutoria
 ---
 title: Ciberseguridad en entornos de las tecnologías de la información · Presentación
 curso: 2026/2027
