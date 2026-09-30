@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Benvida CE Ciberseguridade</title>
+<meta name="description" content="Presentación do primeiro día do curso de especialización">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: pila de diapositivas 16:9 que escalan con su ancho (cqw); en móvil fluyen como tarjetas. Modo presentación = pantalla completa, una por pantalla. */
+:root{
+  --bg:#E6ECEA; --slide:#FAFCFB; --ink:#14211F; --muted:#586866; --line:#CBD6D3;
+  --accent:#1B6C62; --accent-soft:#D5E9E4; --alert:#B4451A;
+  --display:"Bricolage Grotesque", "Segoe UI", Carlito, "Liberation Sans", system-ui, sans-serif;
+  --body:"IBM Plex Sans", "Segoe UI", Carlito, "Liberation Sans", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Consolas, "DejaVu Sans Mono", monospace;
+  /* colores de módulo = los del horario oficial */
+  --afi:#F6C744; --brs:#F2EA6B; --ncs:#8BE384; --pps:#72B5EE; --he:#CFCF74; --ics:#6DAA95; --chip-ink:#15201E;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0C1312; --slide:#141E1C; --ink:#E3ECEA; --muted:#93A6A2; --line:#2A3835;
+  --accent:#63C7B8; --accent-soft:#1D3431; --alert:#F08A5D; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#0C1312; --slide:#141E1C; --ink:#E3ECEA; --muted:#93A6A2; --line:#2A3835;
+  --accent:#63C7B8; --accent-soft:#1D3431; --alert:#F08A5D; color-scheme:dark;}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);margin:0}
+.deck{display:flex;flex-direction:column;align-items:center;gap:28px;padding-block:28px 64px;padding-inline:16px}
+.toolbar{width:min(1200px,100%);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.toolbar button{font:500 13px var(--body);background:var(--accent);color:var(--slide);border:0;border-radius:6px;padding:8px 14px;cursor:pointer}
+.toolbar button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+.slide{width:min(1200px,100%);aspect-ratio:16/9;background:var(--slide);border:1px solid var(--line);border-radius:10px;
+  container-type:inline-size;position:relative;overflow:hidden;scroll-margin-top:16px}
+.in{position:absolute;inset:0;padding:4.2cqw 5cqw 4.6cqw;display:flex;flex-direction:column;gap:2.2cqw;font-size:1.45cqw;line-height:1.45}
+.toidx{color:var(--accent);text-decoration:none}
+.foot{position:absolute;left:5cqw;right:5cqw;bottom:1.6cqw;display:flex;justify-content:space-between;font:400 .95cqw var(--mono);color:var(--muted);letter-spacing:.04em}
+.eyebrow{font:500 .95em var(--mono);color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+h1,h2{font-family:var(--display);margin:0;text-wrap:balance;line-height:1.05}
+h2{font-size:3.3cqw;font-weight:700;letter-spacing:-.01em}
+p{margin:0}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono)}
+ul{margin:0;padding-left:1.1em;display:grid;gap:.45em;align-content:start}
+li::marker{color:var(--accent)}
+a{color:var(--accent);text-underline-offset:.15em}
+a:focus-visible{outline:2px solid var(--accent)}
+
+/* Portada */
+.cover .in{justify-content:space-between;background:
+  linear-gradient(90deg,transparent calc(100% - 1px),var(--line) 0) 0 0/4cqw 100%,
+  linear-gradient(transparent calc(100% - 1px),var(--line) 0) 0 0/100% 4cqw;}
+.cover .in::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,var(--slide) 42%,transparent 100%);pointer-events:none}
+.cover .in>*{position:relative;z-index:1}
+.cover h1{font-size:6.2cqw;font-weight:800;letter-spacing:-.025em;max-width:16ch}
+.cover h1 em{font-style:normal;color:var(--accent)}
+.cover .sub{font-size:1.9cqw;max-width:48ch}
+.cover .meta{display:flex;gap:3cqw;flex-wrap:wrap;font:500 1.15cqw var(--mono)}
+.cover .meta span b{display:block;font-weight:400;color:var(--muted);font-size:.8em;letter-spacing:.08em;text-transform:uppercase}
+.log{font:400 1.1cqw var(--mono);color:var(--muted)}
+.log b{color:var(--accent);font-weight:500}
+
+/* Agenda */
+.agenda{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4cqw 2cqw;counter-reset:a}
+.agenda div{border-top:2px solid var(--ink);padding-top:.8cqw;counter-increment:a}
+.agenda div::before{content:counter(a,decimal-leading-zero);font:500 .9em var(--mono);color:var(--accent);display:block}
+.agenda a.ag{text-decoration:none;color:inherit}.agenda a.ag:hover b{color:var(--accent)}
+.agenda b{font-family:var(--display);font-size:1.35em;display:block;margin:.2em 0}
+
+/* Curso */
+.two{display:grid;grid-template-columns:1.1fr 1fr;gap:4cqw;min-height:0;flex:1}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:1.6cqw}
+.fact{border-left:2px solid var(--accent);padding-left:1cqw}
+.fact .n{font:700 3.2cqw/1 var(--display)}
+.fact .l{color:var(--muted);font-size:.9em}
+
+/* Módulos */
+.mods{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4cqw;flex:1;min-height:0}
+.mod{border:1px solid var(--line);border-radius:6px;padding:1.2cqw 1.3cqw;display:flex;flex-direction:column;gap:.5cqw;min-width:0}
+.mod-h{display:flex;align-items:center;gap:.7cqw;flex-wrap:wrap}
+.chip{font:600 .85em var(--mono);color:var(--chip-ink);padding:.15em .5em;border-radius:4px;letter-spacing:.03em}
+.mod h3{font:700 1.2em/1.15 var(--display);margin:0}
+.mod p{font-size:.86em;color:var(--muted)}
+.mod .row{margin-top:auto;display:flex;justify-content:space-between;font:400 .8em var(--mono);color:var(--ink);border-top:1px dashed var(--line);padding-top:.5cqw;gap:.6em;flex-wrap:wrap}
+.c-afi{background:var(--afi)}.c-brs{background:var(--brs)}.c-ncs{background:var(--ncs)}.c-pps{background:var(--pps)}.c-he{background:var(--he)}.c-ics{background:var(--ics)}
+
+/* Profesorado */
+.staff{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6cqw 2.4cqw}
+.person{display:grid;grid-template-columns:auto 1fr;gap:.2cqw 1.2cqw;align-items:center}
+.ini{grid-row:span 2;width:4.4cqw;height:4.4cqw;border-radius:50%;display:grid;place-items:center;font:600 1.05cqw var(--mono);color:var(--chip-ink)}
+.person b{font-family:var(--display);font-size:1.15em;line-height:1.15}
+.person span{font-size:.88em;color:var(--muted)}
+.me{outline:2px solid var(--accent);outline-offset:.8cqw;border-radius:4px}
+
+/* Horario */
+.tt-wrap{flex:1;min-height:0;overflow:auto}
+table.tt{width:100%;height:100%;border-collapse:separate;border-spacing:.35cqw;table-layout:fixed;font-size:.9em}
+.tt th{font:500 .85em var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em;padding:.3cqw}
+.tt td.h{font:400 .82em var(--mono);color:var(--muted);text-align:right;padding-right:.6cqw;width:7%;white-space:nowrap}
+.tt td.s{border-radius:4px;color:var(--chip-ink);padding:.5cqw .8cqw;vertical-align:top}
+.tt td.s b{font:700 1.25em var(--display);display:block}
+.tt td.s span{font:400 .8em var(--mono)}
+.tt td.r{text-align:center;font:400 .8em var(--mono);color:var(--muted);background:var(--accent-soft);border-radius:4px;letter-spacing:.2em;text-transform:uppercase}
+.tt td.e{border:1px dashed var(--line);border-radius:4px}
+
+/* Calendario */
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2cqw 2cqw}
+.ev{display:grid;gap:.2cqw;border-top:1px solid var(--line);padding-top:.7cqw}
+.ev time{font:500 1.05em var(--mono);color:var(--accent)}
+.ev.key time{color:var(--alert)}
+.ev.key{border-top:2px solid var(--alert)}
+.ev span{font-size:.9em}
+
+/* Normas / credenciales */
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:3cqw}
+.cols3 h3,.two h3{font:700 1.25em var(--display);margin:0 0 .8cqw}
+.creds{border-collapse:collapse;width:100%;font-size:.95em}
+.creds td{border-bottom:1px solid var(--line);padding:.7cqw .6cqw}
+.creds td:first-child{color:var(--muted);width:42%}
+.fill{font-family:var(--mono);display:inline-block;min-width:12em;border-bottom:1px dashed var(--accent);outline:none;padding:0 .2em}
+.fill.static{color:var(--muted)}
+.fill:focus{background:var(--accent-soft)}
+.warn{align-self:start;border:1px solid var(--alert);color:var(--ink);border-radius:6px;padding:1cqw 1.3cqw;font-size:.92em}
+.warn b{color:var(--alert)}
+.refs{display:grid;grid-template-columns:repeat(2,1fr);gap:1cqw 3cqw;font-size:.95em}
+.refs div{border-top:1px solid var(--line);padding-top:.6cqw}
+.refs small{display:block;color:var(--muted);font:400 .8em var(--mono);word-break:break-all}
+.end .in{justify-content:center}
+.end h2{font-size:5.2cqw}
+
+/* Móvil: tarjetas de alto libre */
+@media (max-width:760px){
+  .slide{aspect-ratio:auto}
+  .in{position:relative;inset:auto;font-size:15px;padding:24px 18px 44px;gap:16px}
+  .foot{font-size:11px;bottom:12px;left:18px;right:18px}
+  h2{font-size:26px}.cover h1{font-size:34px}.cover .sub{font-size:17px}.cover .meta,.log{font-size:13px}
+  .agenda,.facts,.mods,.staff,.timeline,.cols3,.two,.refs{grid-template-columns:1fr;gap:14px}
+  .fact .n{font-size:28px}.ini{width:44px;height:44px;font-size:12px}
+  .tt-wrap{overflow-x:auto}.tt{min-width:640px}
+  .end h2{font-size:32px}
+}
+/* Modo presentación */
+.deck:fullscreen{background:var(--bg);overflow-y:auto;scroll-snap-type:y mandatory;padding:0;gap:0}
+.deck:fullscreen .toolbar{display:none}
+.deck:fullscreen .slide{width:min(100vw,177.78vh);scroll-snap-align:center;border-radius:0;border:0;margin-block:calc((100vh - min(100vw,177.78vh)*.5625)/2)}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+<style>
+@page{size:1280px 720px;margin:0}
+@media print{
+  :root{color-scheme:light}
+  #inicio{--slide:#EEEAD6; --ink:#33301F; --muted:#6E6948; --line:#D3CCA8; --accent:#75601F; background:var(--slide); color:var(--ink)}
+  body{background:var(--slide)}
+  .toolbar{display:none}
+  .deck{padding:0;gap:0;display:block}
+  .slide{width:1280px;height:720px;aspect-ratio:auto;border:0;border-radius:0;break-after:page;page-break-after:always}
+  .slide:last-of-type{break-after:auto}
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+  <div class="toolbar">
+    <span>14 diapositivas · usa ← → o la barra espaciadora · los campos subrayados se pueden rellenar</span>
+    <button id="present" type="button">Presentar a pantalla completa</button>
+  </div>
+
+  <!-- 1 Portada -->
+  <section class="slide cover" id="inicio"><div class="in">
+    <div class="log"><b>[ 16:00 ]</b> sesión iniciada · aula 211 · <b>CECS</b> 2026/2027</div>
+    <div style="display:grid;gap:2cqw">
+      <h1>Ciberseguridad en entornos de las <em>tecnologías de la información</em></h1>
+      <p class="sub muted">Curso de especialización de FP · Bienvenida y presentación del primer día</p>
+    </div>
+    <div class="meta">
+      <span><b>Centro</b>IES Chan do Monte · Marín</span>
+      <span><b>Código</b>SIFC50 · E3IFC005000</span>
+      <span><b>Duración</b>720 h · 30 sesiones/semana</span>
+      <span><b>Horario</b>Tardes 16:00–22:20</span>
+    </div>
+  </div></section>
+
+  <!-- 2 Agenda -->
+  <section class="slide" id="agenda"><div class="in">
+    <span class="eyebrow">Hoy</span>
+    <h2>Qué vamos a ver en esta primera sesión</h2>
+    <div class="agenda">
+      <div><a class="ag" href="#curso"><b>El curso</b></a><span class="muted">Qué es un CE, a quién va dirigido y salidas profesionales.</span></div>
+      <div><a class="ag" href="#modulos"><b>Los módulos</b></a><span class="muted">Seis módulos, qué se trabaja en cada uno.</span></div>
+      <div><a class="ag" href="#profesorado"><b>Profesorado</b></a><span class="muted">Quién imparte cada módulo.</span></div>
+      <div><a class="ag" href="#horario"><b>Horario</b></a><span class="muted">Semana tipo en el aula 211.</span></div>
+      <div><a class="ag" href="#calendario"><b>Calendario</b></a><span class="muted">Festivos, vacaciones y evaluaciones.</span></div>
+      <div><a class="ag" href="#normas"><b>Normas</b></a><span class="muted">Aula, laboratorio virtual y ética profesional.</span></div>
+      <div><a class="ag" href="#credenciales"><b>Credenciales</b></a><span class="muted">Cuentas y accesos que vais a necesitar.</span></div>
+      <div><a class="ag" href="#referencias"><b>Referencias</b></a><span class="muted">Dónde consultar la normativa oficial.</span></div>
+    </div>
+  </div><div class="foot"><span>CECS · IES Chan do Monte</span><span>02</span></div></section>
+
+  <!-- 3 El curso -->
+  <section class="slide" id="curso"><div class="in">
+    <span class="eyebrow">El curso</span>
+    <h2>Un año para especializarse en seguridad de sistemas TI</h2>
+    <div class="two">
+      <div style="display:grid;gap:1.4cqw;align-content:start">
+        <p>El curso forma para <b>definir e implantar estrategias de seguridad</b> en los sistemas de información: diagnosticar incidentes, detectar vulnerabilidades y aplicar medidas conforme a la normativa y a los estándares del sector.</p>
+        <p class="muted">Título estatal regulado por el Real Decreto 479/2020, de 7 de abril. En Galicia se imparte con 720 horas y se accede con un título de técnico superior de la familia de Informática y Comunicaciones (ASIR, DAM, DAW…).</p>
+        <div>
+          <h3 style="font:700 1.1em var(--display);margin:0 0 .5cqw">Salidas profesionales</h3>
+          <ul><li>Experto/a en ciberseguridad</li><li>Auditor/a de ciberseguridad</li><li>Consultor/a de ciberseguridad</li><li>Hacker ético · analista de incidentes (SOC)</li></ul>
+        </div>
+      </div>
+      <div class="facts" style="align-content:start">
+        <div class="fact"><div class="n mono">720</div><div class="l">horas totales</div></div>
+        <div class="fact"><div class="n mono">6</div><div class="l">módulos profesionales</div></div>
+        <div class="fact"><div class="n mono">175</div><div class="l">días lectivos 2026/27</div></div>
+        <div class="fact"><div class="n mono">30</div><div class="l">sesiones de 50 min por semana</div></div>
+        <div class="fact"><div class="n mono">CS</div><div class="l">nivel de grado superior</div></div>
+        <div class="fact"><div class="n mono">211</div><div class="l">aula de referencia</div></div>
+      </div>
+    </div>
+  </div><div class="foot"><span>CECS · El curso</span><span><a class="toidx" href="#agenda">índice</a> · 03</span></div></section>
+
+  <!-- 4 Módulos -->
+  <section class="slide" id="modulos"><div class="in">
+    <span class="eyebrow">Los módulos</span>
+    <h2>Seis módulos, todos en el mismo curso</h2>
+    <div class="mods">
+      <article class="mod"><div class="mod-h"><span class="chip c-ics">ICS</span><span class="mono muted">MP5021</span></div>
+        <h3>Incidentes de ciberseguridad</h3>
+        <p>Planes de prevención y concienciación, detección y monitorización (SIEM), investigación, respuesta y notificación de incidentes.</p>
+        <div class="row"><span>140 h</span><span>6 ses./sem.</span></div></article>
+      <article class="mod"><div class="mod-h"><span class="chip c-brs">BRS</span><span class="mono muted">MP5022</span></div>
+        <h3>Bastionado de redes y sistemas</h3>
+        <p>Planes de securización, configuración segura de redes, cortafuegos, sistemas operativos y servicios. Reducir la superficie de ataque.</p>
+        <div class="row"><span>160 h</span><span>7 ses./sem.</span></div></article>
+      <article class="mod"><div class="mod-h"><span class="chip c-pps">PPS</span><span class="mono muted">MP5023</span></div>
+        <h3>Puesta en producción segura</h3>
+        <p>Desarrollo y despliegue seguro de software: pruebas de seguridad, vulnerabilidades web (OWASP), apps móviles y DevSecOps.</p>
+        <div class="row"><span>120 h</span><span>5 ses./sem.</span></div></article>
+      <article class="mod"><div class="mod-h"><span class="chip c-afi">AFI</span><span class="mono muted">MP5024</span></div>
+        <h3>Análisis forense informático</h3>
+        <p>Adquisición y análisis de evidencias en equipos, memoria, red, móviles, cloud e IoT. Cadena de custodia e informe pericial.</p>
+        <div class="row"><span>120 h</span><span>5 ses./sem.</span></div></article>
+      <article class="mod"><div class="mod-h"><span class="chip c-he">HE</span><span class="mono muted">MP5025</span></div>
+        <h3>Hacking ético</h3>
+        <p>Metodologías de auditoría técnica: reconocimiento, explotación de redes, sistemas y aplicaciones web, redes inalámbricas y post‑explotación.</p>
+        <div class="row"><span>120 h</span><span>5 ses./sem.</span></div></article>
+      <article class="mod"><div class="mod-h"><span class="chip c-ncs">NCS</span><span class="mono muted">MP5026</span></div>
+        <h3>Normativa de ciberseguridad</h3>
+        <p>Cumplimiento normativo (compliance): RGPD y LOPDGDD, ENS, NIS2, ISO 27001 y responsabilidad legal.</p>
+        <div class="row"><span>60 h</span><span>2 ses./sem.</span></div></article>
+    </div>
+  </div><div class="foot"><span>Horas: oferta Xunta de Galicia · Sesiones: horario del centro</span><span><a class="toidx" href="#agenda">índice</a> · 04</span></div></section>
+
+  <!-- 5 ICS en detalle -->
+  <section class="slide" id="ics"><div class="in">
+    <span class="eyebrow">Zoom · MP5021</span>
+    <h2>Incidentes de ciberseguridad: cinco unidades, un laboratorio</h2>
+    <div class="two">
+      <ul>
+        <li><b>UD1 · Planes de prevención y concienciación.</b> <span class="muted">Ciclo de vida de un incidente, equipos de respuesta, formación y phishing simulado.</span></li>
+        <li><b>UD2 · Auditoría de incidentes.</b> <span class="muted">Monitorización, detección, taxonomía y seguimiento inicial.</span></li>
+        <li><b>UD3 · Investigación de incidentes.</b> <span class="muted">Recogida de evidencias, análisis de malware y de registros.</span></li>
+        <li><b>UD4 · Medidas de ciberseguridad.</b> <span class="muted">Contención, segmentación y recuperación.</span></li>
+        <li><b>UD5 · Detección y documentación.</b> <span class="muted">Informes y notificación (INCIBE‑CERT, AEPD en 72 h).</span></li>
+      </ul>
+      <div style="display:grid;gap:1.2cqw;align-content:start">
+        <p>Trabajaremos sobre una empresa ficticia, <b>TecnoMariña S.L.</b>, en una red aislada con:</p>
+        <table class="creds mono" style="font-size:.85em">
+          <tr><td>SIEM</td><td>Wazuh · Suricata · Sysmon</td></tr>
+          <tr><td>Víctimas</td><td>Windows 10 · servidor web Debian</td></tr>
+          <tr><td>Análisis</td><td>Kali Linux</td></tr>
+          <tr><td>Red</td><td>172.21.10.0/24 (interna)</td></tr>
+        </table>
+        <p class="muted" style="font-size:.9em">Material y guías en el aula virtual del módulo. El laboratorio está en configuración.</p>
+      </div>
+    </div>
+  </div><div class="foot"><span>6 sesiones · martes y jueves 16:00–18:30</span><span><a class="toidx" href="#agenda">índice</a> · 05</span></div></section>
+
+  <!-- 6 Profesorado -->
+  <section class="slide" id="profesorado"><div class="in">
+    <span class="eyebrow">Profesorado</span>
+    <h2>Quién os da clase</h2>
+    <div class="staff">
+      <div class="person me"><span class="ini c-ics">RNM</span><b>María Rodríguez Novoa</b><span>Incidentes de ciberseguridad · 6 ses.</span></div>
+      <div class="person"><span class="ini c-brs">ERJ</span><b>José Estévez Rey</b><span>Bastionado de redes y sistemas · 7 ses.</span></div>
+      <div class="person"><span class="ini c-pps">OPG</span><b>Gerardo Ortega Pazos</b><span>Puesta en producción segura · 5 ses.</span></div>
+      <div class="person"><span class="ini c-afi">ACF</span><b>Fernando Álvarez Crespo</b><span>Análisis forense informático · 5 ses.</span></div>
+      <div class="person"><span class="ini c-he">PGJJ</span><b>Juan Jesús Pazos García</b><span>Hacking ético · 5 ses.</span></div>
+      <div class="person"><span class="ini c-ncs">?</span><b>Pendiente de nombramiento</b><span>Normativa de ciberseguridad · 2 ses. · sustituye a José Luis Noya Souto</span></div>
+    </div>
+    <p class="muted" style="margin-top:auto">Tutora del grupo: <b style="color:var(--ink)">María Rodríguez Novoa</b> · Tutoría: <b style="color:var(--ink)">jueves de 19:00 a 19:50</b></p>
+  </div><div class="foot"><span>CECS · Profesorado</span><span><a class="toidx" href="#agenda">índice</a> · 06</span></div></section>
+
+  <!-- 7 Horario -->
+  <section class="slide" id="horario"><div class="in">
+    <span class="eyebrow">Horario semanal · aula 211</span>
+    <h2>La semana tipo</h2>
+    <div class="tt-wrap">
+      <table class="tt" aria-label="Horario semanal CECS">
+        <thead><tr><th></th><th>Lunes</th><th>Martes</th><th>Miércoles</th><th>Jueves</th><th>Viernes</th></tr></thead>
+        <tbody>
+          <tr><td class="h">16:00</td>
+            <td class="s c-afi" rowspan="3"><b>AFI</b><span>ACF</span></td>
+            <td class="s c-ics" rowspan="3"><b>ICS</b><span>RNM</span></td>
+            <td class="s c-pps" rowspan="3"><b>PPS</b><span>OPG · aula SMR2</span></td>
+            <td class="s c-ics" rowspan="3"><b>ICS</b><span>RNM</span></td>
+            <td class="s c-afi" rowspan="2"><b>AFI</b><span>ACF</span></td></tr>
+          <tr><td class="h">16:50</td></tr>
+          <tr><td class="h">17:40</td><td class="s c-ncs"><b>NCS</b><span>por asignar</span></td></tr>
+          <tr><td class="h">18:30</td><td class="r" colspan="5">recreo · 18:30–19:00</td></tr>
+          <tr><td class="h">19:00</td>
+            <td class="s c-brs" rowspan="3"><b>BRS</b><span>ERJ</span></td>
+            <td class="s c-pps" rowspan="2"><b>PPS</b><span>OPG · aula SMR2</span></td>
+            <td class="s c-he" rowspan="3"><b>HE</b><span>PGJJ</span></td>
+            <td class="s c-ncs"><b>NCS</b><span>por asignar</span></td>
+            <td class="s c-brs" rowspan="2"><b>BRS</b><span>ERJ</span></td></tr>
+          <tr><td class="h">19:50</td><td class="s c-he" rowspan="2"><b>HE</b><span>PGJJ</span></td></tr>
+          <tr><td class="h">20:40</td><td class="s c-brs" rowspan="2"><b>BRS</b><span>ERJ</span></td><td class="e"></td></tr>
+          <tr><td class="h">21:30</td><td class="e"></td><td class="e"></td><td class="e"></td><td class="e"></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div><div class="foot"><span>Sesiones de 50 min · el martes termina a las 22:20</span><span><a class="toidx" href="#agenda">índice</a> · 07</span></div></section>
+
+  <!-- 8 Calendario -->
+  <section class="slide" id="calendario"><div class="in">
+    <span class="eyebrow">Calendario 2026/2027</span>
+    <h2>Fechas que conviene apuntar ya</h2>
+    <div class="timeline">
+      <div class="ev"><time>6–8 oct</time><span>Evaluación inicial</span></div>
+      <div class="ev"><time>12–13 oct</time><span>Festivo y día no lectivo</span></div>
+      <div class="ev"><time>7–8 dic</time><span>Día do Ensino y festivo</span></div>
+      <div class="ev"><time>22 dic – 7 ene</time><span>Vacaciones de Navidad</span></div>
+      <div class="ev"><time>8–10 feb</time><span>Entroido</span></div>
+      <div class="ev key"><time>17 feb</time><span><b>1.ª evaluación CECS</b></span></div>
+      <div class="ev"><time>22–29 mar</time><span>Semana Santa</span></div>
+      <div class="ev"><time>12 abr</time><span>No lectivo (escuela de centro)</span></div>
+      <div class="ev"><time>21 jun</time><span>Fin de las clases</span></div>
+      <div class="ev key"><time>22 jun</time><span><b>Evaluación final CECS</b></span></div>
+      <div class="ev"><time>175</time><span>días lectivos en total</span></div>
+      <div class="ev"><time>Abalar</time><span>Boletines el mismo día de la evaluación</span></div>
+    </div>
+    <p class="muted" style="font-size:.85em;margin-top:auto">El calendario definitivo de evaluaciones se comunica antes de cada una.</p>
+  </div><div class="foot"><span>Fuente: calendario escolar IES Chan do Monte</span><span><a class="toidx" href="#agenda">índice</a> · 08</span></div></section>
+
+  <!-- 9 Evaluación -->
+  <section class="slide" id="evaluacion"><div class="in">
+    <span class="eyebrow">Evaluación</span>
+    <h2>Cómo se evalúa</h2>
+    <div class="cols3">
+      <div><h3>Continua</h3><ul><li>Cada módulo tiene su programación con resultados de aprendizaje y criterios.</li><li>Prácticas, retos, informes y pruebas escritas o prácticas.</li><li>La asistencia y el trabajo diario cuentan.</li></ul></div>
+      <div><h3>Dos sesiones</h3><ul><li>1.ª evaluación: 17 de febrero.</li><li>Evaluación final: 22 de junio.</li><li>Antes, evaluación inicial para conocer vuestro punto de partida.</li></ul></div>
+      <div><h3>Certificación</h3><ul><li>Superar los seis módulos da el certificado del curso de especialización.</li><li>Cada profesor/a explicará sus criterios y recuperación el primer día de su módulo.</li></ul></div>
+    </div>
+  </div><div class="foot"><span>CECS · Evaluación</span><span><a class="toidx" href="#agenda">índice</a> · 09</span></div></section>
+
+  <!-- 10 Normas de aula -->
+  <section class="slide" id="normas"><div class="in">
+    <span class="eyebrow">Normas</span>
+    <h2>Convivencia en el aula</h2>
+    <div class="cols3">
+      <div><h3>Tiempo</h3><ul><li>Puntualidad: empezamos a las 16:00 y a las 19:00 tras el recreo.</li><li>Justificad las faltas y avisad si vais a faltar a una práctica evaluable.</li><li>Las entregas tienen fecha; fuera de plazo, según cada módulo.</li></ul></div>
+      <div><h3>Equipos</h3><ul><li>Nada de comida ni bebida sobre las mesas de equipos.</li><li>No instaléis software ni cambiéis la configuración del puesto.</li><li>Bloquead la sesión al levantaros (Win + L) y cerradla al salir.</li></ul></div>
+      <div><h3>Comunicación</h3><ul><li>Canal oficial: aula virtual (un curso de tutoría y uno por módulo) y correo de EduXunta.</li><li>Móvil en silencio salvo que la actividad lo requiera.</li><li>Respeto a compañeros/as y profesorado, también en foros y chats.</li></ul></div>
+    </div>
+  </div><div class="foot"><span>CECS · Normas</span><span><a class="toidx" href="#agenda">índice</a> · 10</span></div></section>
+
+  <!-- 11 Laboratorio -->
+  <section class="slide" id="laboratorio"><div class="in">
+    <span class="eyebrow">Normativa TIC del centro</span>
+    <h2>Máquinas virtuales en los equipos del aula</h2>
+    <div class="two">
+      <div><h3>Red</h3><ul>
+        <li><b>Prohibido el modo puente (bridged)</b>. Usad NAT, red NAT, red interna o solo‑anfitrión.</li>
+        <li>Rangos internos <span class="mono">172.x</span> con x entre 21 y 31.</li>
+        <li>Evitad <span class="mono">192.168.0.0/16</span> (red real) y <span class="mono">10.0.0.0/8</span> (red SARA).</li>
+        <li>Proxy <span class="mono">192.168.0.11:3128</span> · DNS <span class="mono">192.168.0.9</span> / <span class="mono">.11</span></li></ul></div>
+      <div><h3>Almacenamiento</h3><ul>
+        <li>Máquinas y snapshots en <span class="mono">D:\usuario</span>, nunca en la cuota del dominio.</li>
+        <li>Las máquinas <b>no se mueven</b> de equipo: usad siempre el mismo puesto.</li>
+        <li>OVAs base en <span class="mono">\\lapaman\grandes\virtuales</span>.</li>
+        <li>Cada puesto: 32 GB de RAM y SSD. Apagad las VM que no uséis.</li></ul></div>
+    </div>
+  </div><div class="foot"><span>CECS · Laboratorio</span><span><a class="toidx" href="#agenda">índice</a> · 11</span></div></section>
+
+  <!-- 12 Ética -->
+  <section class="slide" id="etica"><div class="in">
+    <span class="eyebrow">Ética profesional</span>
+    <h2>Aprendemos a atacar para saber defender</h2>
+    <div class="two">
+      <ul>
+        <li>Las técnicas ofensivas se practican <b>solo en el laboratorio</b> o sobre sistemas con autorización escrita.</li>
+        <li>Nunca contra la red del centro, la de EduXunta ni sistemas de terceros.</li>
+        <li>Los datos que veáis en prácticas o empresas son <b>confidenciales</b>.</li>
+        <li>Si encontráis una vulnerabilidad real, avisad al profesorado: no la explotéis.</li>
+      </ul>
+      <div class="warn"><b>Ojo:</b> acceder sin permiso a un sistema o dañar datos ajenos es delito en España (Código Penal, arts. 197 bis y 264), aunque sea "para probar". El módulo de Normativa lo trata a fondo.</div>
+    </div>
+  </div><div class="foot"><span>CECS · Ética</span><span><a class="toidx" href="#agenda">índice</a> · 12</span></div></section>
+
+  <!-- 13 Credenciales -->
+  <section class="slide" id="credenciales"><div class="in">
+    <span class="eyebrow">Credenciales</span>
+    <h2>Cuentas y accesos</h2>
+    <div class="two">
+      <table class="creds">
+        <tr><td>Usuario de dominio (equipos del aula)</td><td><span class="mono">2 letras del nombre + 3 de cada apellido</span><br><span class="muted" style="font-size:.85em">p. ej. <b class="mono" style="color:var(--ink)">Ma</b>ría <b class="mono" style="color:var(--ink)">Rod</b>ríguez <b class="mono" style="color:var(--ink)">Nov</b>oa → <span class="mono" style="color:var(--accent)">marodnov</span></span></td></tr>
+        <tr><td>Contraseña inicial</td><td><span class="fill static">se entrega en papel</span></td></tr>
+        <tr><td>Cuenta EduXunta / correo</td><td><span class="fill static">usuario@edu.xunta.gal</span></td></tr>
+        <tr><td>Aula virtual · tutoría</td><td><a class="mono" href="https://centros.edu.xunta.gal/ieschanmonte/aulavirtual/course/view.php?id=836" target="_blank" rel="noopener" style="font-size:.85em;word-break:break-all">centros.edu.xunta.gal/ieschanmonte/aulavirtual · curso 836</a></td></tr>
+        <tr><td>Aula virtual · módulos</td><td>Un curso por módulo (seis en total)</td></tr>
+        <tr><td>Wi‑Fi</td><td><span class="fill static">red y método de acceso</span></td></tr>
+        <tr><td>Máquinas del laboratorio</td><td><span class="fill static">se indican en cada práctica</span></td></tr>
+      </table>
+      <div style="display:grid;gap:1.2cqw;align-content:start">
+        <h3>Primeros pasos hoy</h3>
+        <ul><li>Iniciad sesión y cambiad la contraseña inicial.</li><li>Entrad en el aula virtual de tutoría y en el curso de cada uno de los seis módulos.</li><li>Comprobad que recibís correo de EduXunta.</li></ul>
+        <div class="warn"><b>Buenas prácticas:</b> contraseña única y larga, nada de apuntarla en el puesto y activad 2FA donde se pueda.</div>
+      </div>
+    </div>
+  </div><div class="foot"><span>Las contraseñas no se proyectan: se entregan en mano</span><span><a class="toidx" href="#agenda">índice</a> · 13</span></div></section>
+
+  <!-- 14 Referencias -->
+  <section class="slide" id="referencias"><div class="in">
+    <span class="eyebrow">Referencias</span>
+    <h2>Dónde consultar la información oficial</h2>
+    <div class="refs">
+      <div><a href="https://www.edu.xunta.gal/fp/ciclo/SIFC50" target="_blank" rel="noopener">Ficha del curso SIFC50 · FP Xunta</a><small>edu.xunta.gal/fp/ciclo/SIFC50</small></div>
+      <div><a href="https://www.boe.es/eli/es/rd/2020/04/07/479" target="_blank" rel="noopener">Real Decreto 479/2020 (BOE)</a><small>boe.es/eli/es/rd/2020/04/07/479</small></div>
+      <div><a href="https://www.edu.xunta.gal/fp/sifc50-mp5021" target="_blank" rel="noopener">Módulo MP5021 · Incidentes</a><small>edu.xunta.gal/fp/sifc50-mp5021</small></div>
+      <div><a href="https://www.edu.xunta.gal/fp/sifc50-mp5026" target="_blank" rel="noopener">Módulo MP5026 · Normativa</a><small>edu.xunta.gal/fp/sifc50-mp5026 (mp5022…mp5025 para el resto)</small></div>
+      <div><a href="https://ciberseguridadegalicia.gal/es/recursos/formacion-reglada-en-ciberseguridad/curso-de-especializacion-en-ciberseguridad-en-entornos-de-las-tecnologias-de-la-informacion" target="_blank" rel="noopener">Ciberseguridade Galicia · ficha del curso</a><small>ciberseguridadegalicia.gal</small></div>
+      <div><a href="https://www.incibe.es" target="_blank" rel="noopener">INCIBE</a><small>incibe.es · avisos, guías y notificación de incidentes</small></div>
+      <div><span style="color:var(--ink);font-weight:500">Laboratorio MP5021</span><small>En configuración · el enlace se publicará en el aula virtual</small></div>
+      <div><a href="https://centros.edu.xunta.gal/ieschanmonte/aulavirtual/course/view.php?id=836" target="_blank" rel="noopener">Aula virtual · tutoría CECS</a><small>centros.edu.xunta.gal/ieschanmonte/aulavirtual · id=836</small></div>
+      <div><a href="https://www.aepd.es" target="_blank" rel="noopener">AEPD</a><small>aepd.es · protección de datos y brechas de seguridad</small></div>
+    </div>
+  </div><div class="foot"><span>CECS · Referencias</span><span><a class="toidx" href="#agenda">índice</a> · 14</span></div></section>
+
+  <!-- 15 Cierre -->
+  <section class="slide end" id="cierre"><div class="in">
+    <span class="eyebrow">[ fin de la sesión ]</span>
+    <h2>¿Preguntas?</h2>
+    <p class="muted" style="font-size:1.4em;max-width:40ch">Ahora: presentación de cada uno/a, cuestionario de evaluación inicial y primer acceso a los equipos.</p>
+  </div><div class="foot"><span>CECS · IES Chan do Monte · Marín</span><span><a class="toidx" href="#agenda">índice</a> · 15</span></div></section>
+</div>
+
+<script>
+(function(){
+  const deck=document.getElementById('deck');
+  const slides=[...document.querySelectorAll('.slide')];
+  document.querySelector('.toolbar span').textContent=slides.length+' diapositivas · usa ← → o la barra espaciadora';
+  function current(){
+    let best=0,d=Infinity;
+    slides.forEach((s,i)=>{const r=s.getBoundingClientRect();const dd=Math.abs(r.top+r.height/2-innerHeight/2);if(dd<d){d=dd;best=i}});
+    return best;
+  }
+  function go(i){i=Math.max(0,Math.min(slides.length-1,i));slides[i].scrollIntoView({block:'center'});}
+  document.addEventListener('keydown',e=>{
+    if(e.target.isContentEditable)return;
+    if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();go(current()+1)}
+    else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(current()-1)}
+  });
+  document.getElementById('present').addEventListener('click',()=>{
+    if(deck.requestFullscreen){deck.requestFullscreen().then(()=>go(0)).catch(()=>{});}
+  });
+})();
+</script>
+</body>
+</html>
