@@ -224,7 +224,7 @@ Aprendemos a atacar para saber defender.
 
 | Cuenta | Dato |
 |---|---|
-| Usuario de dominio (equipos del aula) | 2 letras del nombre + 3 de cada apellido. Ej.: **Ma**ría **Rod**ríguez **Nov**oa → `marodnov` |
+| Usuario de dominio (equipos del aula) | 1.ª letra del nombre + 4 primeras de cada apellido. Ej.: **M**aría **Rodr**íguez **Novo**a → `mrodrnovo` |
 | Contraseña inicial | Se entrega en papel |
 | Cuenta EduXunta / correo | usuario@edu.xunta.gal |
 | Aula virtual · tutoría | [centros.edu.xunta.gal/ieschanmonte/aulavirtual · curso 836](https://centros.edu.xunta.gal/ieschanmonte/aulavirtual/course/view.php?id=836) |
